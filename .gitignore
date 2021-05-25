@@ -1,0 +1,8 @@
+.idea/
+*.jpg
+*.jpeg
+*.png
+*.mp4
+100MEDIA/
+cmake-build-release-vs-x64/
+yolov3/
