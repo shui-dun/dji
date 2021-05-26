@@ -3,6 +3,7 @@
 *.jpeg
 *.png
 *.mp4
+*.html
 100MEDIA/
 cmake-build-release-vs-x64/
 yolov3/

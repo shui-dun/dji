@@ -2,6 +2,7 @@ import os
 import random
 
 import torch
+import torch.nn as nn
 import torchvision.transforms as transforms
 from PIL import Image
 from torch.utils.data import Dataset
@@ -10,17 +11,23 @@ batch_size = 128
 
 n_epoch = 200
 
+lr = 0.001
+
 datasetPath = 'data/lineData'
 
 transform = transforms.Compose([
     transforms.Resize([128, 128]),
     transforms.ToTensor(),
-    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+    transforms.Normalize(mean=[0.5,0.5,0.5], std=[0.5,0.5,0.5])
 ])
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-lr = 0.001
+# 交叉熵损失函数，常用于分类问题
+weight = torch.zeros(1000)
+weight[0] = 0.05
+weight[1] = 0.95
+criterion = nn.CrossEntropyLoss(weight=weight)
 
 
 class MyDateset(Dataset):
@@ -70,6 +77,24 @@ def split(originPath="D:/file/code/PROJECTS/djiDetect/100MEDIA/cars/turn1/result
         for line in lst_test:
             f.write('{} {}\n'.format(line[0], line[1]))
 
+
+def count(outputs, labels):
+    _, predicted = torch.max(outputs.data[:, :2], 1)
+    total = labels.size(0)
+    tp = ((predicted == 1) & (labels == 1)).sum().item()
+    tn = ((predicted == 0) & (labels == 0)).sum().item()
+    fp = ((predicted == 1) & (labels == 0)).sum().item()
+    fn = ((predicted == 0) & (labels == 1)).sum().item()
+    return total, tp, tn, fp, fn
+
+
+def estimate(total, tp, tn, fp, fn, total_loss):
+    acc = (tp + tn) / total
+    p = tp / (tp + fp)
+    r = tp / (tp + fn)
+    f1 = 2 * r * p / (r + p)
+    loss = total_loss / total
+    return acc, p, r, f1, loss
 
 if __name__ == '__main__':
     split()

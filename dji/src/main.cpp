@@ -27,7 +27,7 @@ void showOutput() {
 
 int main() {
     // string videosAddress = "rtmp://192.168.43.72:1935/live/home";
-    string videosAddress = "D:\\file\\code\\PROJECTS\\djiDetect\\100MEDIA\\DJI_0022.MP4";
+    string videosAddress = "D:\\file\\code\\PROJECTS\\djiDetect\\100MEDIA\\DJI_0024.MP4";
     cv::VideoCapture capture;
     string realTime = "realTime";
     cv::namedWindow(realTime, cv::WINDOW_NORMAL);
