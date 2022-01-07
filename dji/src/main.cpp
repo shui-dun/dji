@@ -16,7 +16,7 @@ void showOutput() {
     string output = "output";
     cv::namedWindow(output, cv::WINDOW_NORMAL);
     cv::resizeWindow(output, 768, 432);
-    cv::moveWindow(output, 50, 0);
+    cv::moveWindow(output, 200, 0);
     while (true) {
         cv::Mat copyFrame = frameRealTime.clone();
         drawRectangle(copyFrame);
@@ -26,19 +26,20 @@ void showOutput() {
 }
 
 int main() {
+//    cout << a << b << c;
     // string videosAddress = "rtmp://192.168.43.72:1935/live/home";
-    string videosAddress = "D:\\file\\code\\PROJECTS\\djiDetect\\100MEDIA\\DJI_0024.MP4";
+    string videosAddress = "D:\\file\\code\\PROJECTS\\djiDetect\\100MEDIA\\DJI_0023.MP4";
     cv::VideoCapture capture;
     string realTime = "realTime";
-    cv::namedWindow(realTime, cv::WINDOW_NORMAL);
-    cv::resizeWindow(realTime, 768, 432);
-    cv::moveWindow(realTime, 750, 400);
     if (!capture.open(videosAddress)) {
         cout << "can not open ...\n";
         return -1;
     }
     capture.read(frameRealTime);
     thread t(showOutput);
+    cv::namedWindow(realTime, cv::WINDOW_NORMAL);
+    cv::resizeWindow(realTime, 768, 432);
+    cv::moveWindow(realTime, 200, 400);
     while (!frameRealTime.empty()) {
         imshow(realTime, frameRealTime);
         if (cv::waitKey(1) != -1) {

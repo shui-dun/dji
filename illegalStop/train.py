@@ -19,7 +19,7 @@ if __name__ == '__main__':
     )
 
     # 加载网络
-    net = torch.hub.load('pytorch/vision:v0.9.0', 'resnet18', pretrained=False)
+    net = torch.hub.load('pytorch/vision:v0.9.0', 'resnet18', pretrained=True)
     # net.load_state_dict(torch.load("models/last.pth"))
     net.to(device)
 

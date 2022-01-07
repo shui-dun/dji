@@ -3,7 +3,6 @@
 #include <direct.h>
 #include "mixin.h"
 #include <iomanip>
-#include <windows.h>
 
 vector<bool> illegalCars(vector<cv::Mat> &cars) {
     system("wsl rm -r /mnt/d/file/code/PROJECTS/djiDetect/dji/resource/cars/cars/*");
